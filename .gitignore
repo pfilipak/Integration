@@ -1,2 +1,6 @@
 *.class
 target/*
+ear/target/*
+web/target/*
+ejb/target/*
+
