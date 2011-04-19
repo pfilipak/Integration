@@ -14,7 +14,10 @@ package br.com.tcc.integration.hornetq;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
+import javax.jms.JMSException;
+import javax.jms.Message;
 import javax.jms.MessageConsumer;
+import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
 import javax.jms.Queue;
@@ -28,85 +31,83 @@ import javax.naming.InitialContext;
  */
 public class EmbeddedServer extends HornetQExample
 {
-   public static void main(final String[] args)
-   {
-      new EmbeddedServer().run(args);
-   }
+	public static void main(final String[] args)
+	{
+		new EmbeddedServer().run(args);
+	}
 
-   @Override
-   public boolean runExample() throws Exception
-   {
-      Connection connection = null;
-      InitialContext initialContext = null;
-      try
-      {
-         // Step 1. Create an initial context to perform the JNDI lookup.
-         initialContext = getContext(0);
+	@Override
+	public boolean runExample() throws Exception
+	{
+		Connection connection = null;
+		InitialContext initialContext = null;
+		try
+		{
+			// Step 1. Create an initial context to perform the JNDI lookup.
+			initialContext = getContext(0);
 
-         // Step 2. Perfom a lookup on the queue
-         Queue queue = (Queue)initialContext.lookup("/queue/ExampleQueue");
+			// Step 2. Perfom a lookup on the queue
+			Queue queue = (Queue)initialContext.lookup("/queue/ExampleQueue");
 
-         // Step 3. Perform a lookup on the Connection Factory
-         ConnectionFactory cf = (ConnectionFactory)initialContext.lookup("/ConnectionFactory");
+			// Step 3. Perform a lookup on the Connection Factory
+			ConnectionFactory cf = (ConnectionFactory)initialContext.lookup("/ConnectionFactory");
 
-         // Step 4.Create a JMS Connection
-         connection = cf.createConnection();
+			// Step 4.Create a JMS Connection
+			connection = cf.createConnection();
 
-         // Step 5. Create a JMS Session
-         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+			// Step 5. Create a JMS Session
+			Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-         // Step 6. Create a JMS Message Producer
-         MessageProducer producer = session.createProducer(queue);
+			// Step 6. Create a JMS Message Producer
+			MessageProducer producer = session.createProducer(queue);
 
-         // Step 7. Create a Text Message
-         for (int i = 0; i < 500; i++){
-        	 CardModel cardModel = new CardModel(i,"card" + String.valueOf(i));
-        	 ObjectMessage message = (ObjectMessage) session.createTextMessage(cardModel.getNumber());
-        	 System.out.println("Sent message: " + ((CardModel)message.getObject()).getNumber());
-        	 // Step 8. Send the Message
-        	 Thread sender = new Thread();
-        	 producer.send(message);
-        	 sender.sleep(5000);
-         }
+			// Step 7. Create a Text Message
+//			for (int i = 0; i < 500; i++){
+//				CardModel cardModel = new CardModel(i,"card" + String.valueOf(i));
+//				ObjectMessage message = (ObjectMessage) session.createObjectMessage(cardModel);
+//				System.out.println("Sent message: " + ((CardModel)message.getObject()).getNumber());
+//				// Step 8. Send the Message
+//				producer.send(message);
+//				Thread.sleep(3000);
+//			}
 
 
-         // Step 9. Create a JMS Message Consumer
-         MessageConsumer messageConsumer = session.createConsumer(queue);
 
-         // Step 10. Start the Connection
-         connection.start();
+			connection.start();
+			final MessageConsumer messageConsumer = session.createConsumer(queue);
+			messageConsumer.setMessageListener(new MessageListener(){
 
-         // Step 11. Receive the message
-         
-//         while(!isToFinish()){
-//        	 
-//         }
-         ObjectMessage messageReceived = null;
-         do {
-		System.out.println("Received message: " + ((CardModel)messageReceived.getObject()).getId());
-         } while (messageReceived != null);
+				@Override
+				public void onMessage(Message message) {
+					try{
+						ObjectMessage messageReceived = (ObjectMessage) message;
+						messageReceived = (ObjectMessage)messageConsumer.receive();
+						// TODO Auto-generated catch block
+						System.out.println("Received message: " + ((CardModel)messageReceived.getObject()).getId());					
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}});
 
-        	 messageReceived = (ObjectMessage)messageConsumer.receive(5000);
+			return true;
+		}
+		finally
+		{
+			// Step 12. Be sure to close our JMS resources!
+			if (initialContext != null)
+			{
+				initialContext.close();
+			}
+			if (connection != null)
+			{
+				connection.close();
+			}
+		}
+	}
 
-         return true;
-      }
-      finally
-      {
-         // Step 12. Be sure to close our JMS resources!
-         if (initialContext != null)
-         {
-            initialContext.close();
-         }
-         if (connection != null)
-         {
-            connection.close();
-         }
-      }
-   }
-
-private boolean isToFinish() {
-	// TODO Auto-generated method stub
-	return false;
-}
+	private boolean isToFinish() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

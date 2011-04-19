@@ -3,4 +3,9 @@ target/*
 ear/target/*
 web/target/*
 ejb/target/*
+.project
+.settings
+ear/.settings/*
+ejb/.settings/*
+web/.settings/*
 
