@@ -4,8 +4,8 @@
       <string>currentBuild</string>
       <path-set>
         <pathsSet class="linked-hash-set">
-          <string>index.html</string>
           <string>WEB-INF/web.xml</string>
+          <string>index.html</string>
           <string>WEB-INF/classes/AppServlet.class</string>
         </pathsSet>
       </path-set>

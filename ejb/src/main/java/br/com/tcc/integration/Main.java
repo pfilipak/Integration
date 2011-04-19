@@ -1,14 +1,9 @@
 package br.com.tcc.integration;
 
 import org.apache.camel.CamelContext;
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.impl.DefaultCamelContext;
 
-import br.com.tcc.integration.processor.JAXBProcessor;
 import br.com.tcc.integration.routebuilder.FileToJaxbRoute;
-
-import com.blogspot.diegopacheco.camel.hornetq.component.HornetQCamelConnectionFactory;
-import com.blogspot.diegopacheco.camel.hornetq.component.HornetQComponent;
 
 public class Main {
 
@@ -27,17 +22,16 @@ public class Main {
 		//		context.start();
 		//Thread.sleep(100000); context.stop();
 
-		HornetQComponent hornetQComponent = new HornetQComponent();
-		hornetQComponent.setConnectionFactory(new HornetQCamelConnectionFactory());
+//		HornetQComponent hornetQComponent = new HornetQComponent();
+//		hornetQComponent.setConnectionFactory(new HornetQCamelConnectionFactory());
 
 
 		CamelContext context = new DefaultCamelContext(); 
-		context.addComponent("hornetq", hornetQComponent);
+//		context.addComponent("hornetq", hornetQComponent);
 		context.addRoutes(new FileToJaxbRoute()); 
 		System.out.println("start");
 		context.start();
-		context.resume();
-		Thread.sleep(3000); 
+		Thread.sleep(10000); 
 		System.out.println("stop");
 		context.stop();
 

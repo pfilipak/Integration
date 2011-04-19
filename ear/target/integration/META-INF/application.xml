@@ -5,11 +5,11 @@
 <application>
   <display-name>integration-ear</display-name>
   <module>
-    <ejb>classes</ejb>
+    <ejb>integration.jar</ejb>
   </module>
   <module>
     <web>
-      <web-uri>classes</web-uri>
+      <web-uri>integration.war</web-uri>
       <context-root>integration</context-root>
     </web>
   </module>
