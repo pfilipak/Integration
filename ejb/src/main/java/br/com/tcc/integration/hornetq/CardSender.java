@@ -21,7 +21,7 @@ import javax.jms.Queue;
 import javax.jms.Session;
 import javax.naming.InitialContext;
 
-import br.com.tcc.integration.domain.CardDomain;
+import br.com.tcc.integration.domain.Card;
 import br.com.tcc.integration.hornetq.listener.CardMessageListener;
 
 /**
@@ -54,9 +54,9 @@ public class CardSender extends HornetQExample {
 			connection.start();
 
 			for (int i = 0; i < 500; i++){
-				CardDomain card = new CardDomain(i, "card_" + i);
+				Card card = new Card(i, "card_" + i);
 				ObjectMessage message = (ObjectMessage) session.createObjectMessage(card);
-				System.out.println("Sent message: " + card.getNumber());
+				System.out.println("Sent message: " + card);
 				producer.send(message);
 				Thread.sleep(3000);
 			}

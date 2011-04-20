@@ -1,14 +1,6 @@
 package br.com.tcc.integration.routebuilder;
 
-import java.io.File;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.Marshaller;
-
 import org.apache.camel.builder.RouteBuilder;
-
-import br.com.tcc.integration.model.Client;
 
 public class RouteJboss extends RouteBuilder {
 

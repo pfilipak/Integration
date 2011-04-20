@@ -4,7 +4,7 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
 
-import br.com.tcc.integration.domain.CardDomain;
+import br.com.tcc.integration.domain.Card;
 
 public class CardMessageListener implements MessageListener {
 	
@@ -12,8 +12,8 @@ public class CardMessageListener implements MessageListener {
 	public void onMessage(Message message) {
 		try{
 			ObjectMessage messageReceived = (ObjectMessage) message;
-			CardDomain card = (CardDomain)messageReceived.getObject();
-			System.out.println("Received message: " + card.getId());					
+			Card card = (Card)messageReceived.getObject();
+			System.out.println("Received message: " + card);					
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

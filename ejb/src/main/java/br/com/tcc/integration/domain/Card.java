@@ -1,15 +1,22 @@
 package br.com.tcc.integration.domain;
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
-public class CardDomain implements Serializable {
+@XmlRootElement(name="card")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Card implements Serializable {
 
 	private static final long serialVersionUID = -311894583898572867L;
 
-	private final int id;
-	private final String number;
+	private int id;
+	private String number;
 
-	public CardDomain(int id, String cardNumber) {
+	public Card(){}
+	
+	public Card(int id, String cardNumber) {
 		this.id = id;
 		this.number = cardNumber;
 	}
