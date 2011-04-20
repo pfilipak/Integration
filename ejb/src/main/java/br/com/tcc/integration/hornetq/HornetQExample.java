@@ -130,8 +130,10 @@ public abstract class HornetQExample
 
    protected InitialContext getContext(final int serverId) throws Exception
    {
-      String jndiFilename = "src/main/resources/server" + serverId + "/client-jndi.properties";
+      String jndiFilename = "ejb/src/main/resources/server" + serverId + "/client-jndi.properties";
       File jndiFile = new File(jndiFilename);
+      System.out.println(jndiFile.getAbsolutePath());
+      System.out.println(new File("").getAbsolutePath());
       
       HornetQExample.log.info("using " + jndiFile + " for jndi");
       Properties props = new Properties();
