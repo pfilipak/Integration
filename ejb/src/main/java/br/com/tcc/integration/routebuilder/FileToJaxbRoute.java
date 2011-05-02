@@ -7,7 +7,8 @@ import br.com.tcc.integration.processor.JAXBProcessor;
 public class FileToJaxbRoute extends RouteBuilder {
 	
 	public void configure() { 
-		from("file:///Users/filipak/Documents/workspace/Integration/file/in?noop=true")
+//		from("file:///Users/filipak/Documents/workspace/Integration/file/in?noop=true")
+		from("")
 		.log("peguei o arquivo").process(new JAXBProcessor())
 		.to("direct:part1");
 

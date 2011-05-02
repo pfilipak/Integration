@@ -4,6 +4,7 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.impl.DefaultCamelContext;
 
 import br.com.tcc.integration.routebuilder.FileToJaxbRoute;
+import br.com.tcc.integration.routebuilder.ServletToFileRoute;
 
 public class Main {
 
@@ -29,9 +30,11 @@ public class Main {
 		CamelContext context = new DefaultCamelContext(); 
 //		context.addComponent("hornetq", hornetQComponent);
 		context.addRoutes(new FileToJaxbRoute()); 
+		context.addRoutes(new ServletToFileRoute()); 
+		
 		System.out.println("start");
 		context.start();
-		Thread.sleep(10000); 
+		Thread.sleep(100000); 
 		System.out.println("stop");
 		context.stop();
 
