@@ -12,6 +12,8 @@ package br.com.tcc.integration.hornetq;
  * permissions and limitations under the License.
  */
 
+import java.util.Properties;
+
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.MessageConsumer;
@@ -19,6 +21,7 @@ import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
 import javax.jms.Queue;
 import javax.jms.Session;
+import javax.naming.Context;
 import javax.naming.InitialContext;
 
 import br.com.tcc.integration.domain.Card;
@@ -29,17 +32,16 @@ import br.com.tcc.integration.hornetq.listener.CardMessageListener;
  *
  * @author <a href="ataylor@redhat.com">Andy Taylor</a>
  */
-public class CardSender extends HornetQExample {
-	public static void main(final String[] args) {
-		new CardSender().run(args);
+public class CardSender  {
+	public static void main(final String[] args) throws Exception {
+		new CardSender().run();
 	}
 
-	@Override
-	public boolean runExample() throws Exception {
+	public boolean run() throws Exception {
 		Connection connection = null;
 		InitialContext initialContext = null;
 		try	{
-			initialContext = getContext(0);
+			initialContext = getInitialContext();
 			Queue queue = (Queue)initialContext.lookup("/queue/ExampleQueue");
 
 			ConnectionFactory cf = (ConnectionFactory)initialContext.lookup("/ConnectionFactory");
@@ -71,5 +73,13 @@ public class CardSender extends HornetQExample {
 			}
 		}
 	}
+	
+	private static InitialContext getInitialContext() throws javax.naming.NamingException {  
+		Properties p = new Properties( );  
+		p.put(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");  
+		p.put(Context.URL_PKG_PREFIXES,	" org.jboss.naming:org.jnp.interfaces");  
+		p.put(Context.PROVIDER_URL, "jnp://localhost:1099");  
+		return new javax.naming.InitialContext(p);  
+	}    
 
 }
