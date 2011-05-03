@@ -42,7 +42,7 @@ public class CardSender  {
 		InitialContext initialContext = null;
 		try	{
 			initialContext = getInitialContext();
-			Queue queue = (Queue)initialContext.lookup("/queue/ExampleQueue");
+			Queue queue = (Queue)initialContext.lookup("/queue/testQueue");
 
 			ConnectionFactory cf = (ConnectionFactory)initialContext.lookup("/ConnectionFactory");
 			connection = cf.createConnection();
