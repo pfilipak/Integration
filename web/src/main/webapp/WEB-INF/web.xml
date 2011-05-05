@@ -16,8 +16,8 @@
 		<url-pattern>/services/*</url-pattern>
 	</servlet-mapping>
 
-	<listener>
+	<!--  listener>
 		<listener-class>br.com.tcc.integration.listener.CamelListener</listener-class>
-	</listener>
+	</listener -->
 
 </web-app>

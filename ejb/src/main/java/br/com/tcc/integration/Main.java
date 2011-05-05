@@ -10,8 +10,9 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.component.jms.JmsComponent;
 import org.apache.camel.impl.DefaultCamelContext;
 
-import br.com.tcc.integration.routebuilder.FileToJaxbRoute;
-import br.com.tcc.integration.routebuilder.ServletToFileRoute;
+import br.com.tcc.integration.routebuilder.consumer.ConsumerQueueRoute;
+import br.com.tcc.integration.routebuilder.in.FileToDirectRoute;
+import br.com.tcc.integration.routebuilder.producer.ProduceQueueRoute;
 
 public class Main {
 
@@ -40,8 +41,9 @@ public class Main {
 		ConnectionFactory cf = (ConnectionFactory)initialContext.lookup("/ConnectionFactory");
 		jmsComponent.setConnectionFactory(cf);
 		context.addComponent("jms", jmsComponent);
-		context.addRoutes(new FileToJaxbRoute()); 
-//		context.addRoutes(new ServletToFileRoute()); 
+		context.addRoutes(new FileToDirectRoute()); 
+		context.addRoutes(new ProduceQueueRoute()); 
+		context.addRoutes(new ConsumerQueueRoute()); 
 		
 		System.out.println("start");
 		context.start();
