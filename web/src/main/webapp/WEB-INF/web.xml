@@ -5,8 +5,40 @@
 	id="WebApp_ID" version="2.5">
 
 	<display-name>Integration</display-name>
+	
+	<!-- ******************************************************************* -->
+	<!-- ********************* CONTEXTS PARAMETERS ************************* -->
+	<!-- ******************************************************************* -->
+
+	<context-param>
+		<param-name>resteasy.scan</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	
+	<!-- ****************************************************************** -->
+	<!-- ************************** LISTENERS ************************* -->
+	<!-- ****************************************************************** -->
+	
+		<listener>
+		<listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap
+		</listener-class>
+	</listener>
+	
+		<!-- *************************************************************** -->
+	<!-- ******************** Servlet-Mapping ********************* -->
+	<!-- *************************************************************** -->
 
 	<servlet>
+		<servlet-name>Resteasy</servlet-name>
+		<servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Resteasy</servlet-name>
+		<url-pattern>/resource/*</url-pattern>
+	</servlet-mapping>
+	
+	<!-- servlet>
 		<servlet-name>CamelServlet</servlet-name>
 		<servlet-class>org.apache.camel.component.servlet.CamelHttpTransportServlet</servlet-class>
 	</servlet>
@@ -14,10 +46,10 @@
 	<servlet-mapping>
 		<servlet-name>CamelServlet</servlet-name>
 		<url-pattern>/services/*</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping -->
 
-	<!--  listener>
+	<listener>
 		<listener-class>br.com.tcc.integration.listener.CamelListener</listener-class>
-	</listener -->
+	</listener>
 
 </web-app>

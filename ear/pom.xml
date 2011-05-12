@@ -42,7 +42,7 @@
 						<phase>package</phase>
 						<configuration>
 							<tasks>
-								<copy file="target/integration.ear" tofile="/Users/filipak/Documents/java/jboss/server/default/deploy/integration.ear" />
+								<copy file="target/integration.ear" tofile="/home/desenv/java/jboss/server/default/deploy/integration.ear" />
 							</tasks>
 						</configuration>
 						<goals>

@@ -3,6 +3,7 @@ package br.com.tcc.integration.routebuilder;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JaxbDataFormat;
 
+
 public class Route3 extends RouteBuilder {
 
 	@Override

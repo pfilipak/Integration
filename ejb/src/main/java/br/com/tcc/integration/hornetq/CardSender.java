@@ -33,6 +33,7 @@ import br.com.tcc.integration.hornetq.listener.CardMessageListener;
  * @author <a href="ataylor@redhat.com">Andy Taylor</a>
  */
 public class CardSender  {
+	
 	public static void main(final String[] args) throws Exception {
 		new CardSender().run();
 	}
@@ -42,7 +43,7 @@ public class CardSender  {
 		InitialContext initialContext = null;
 		try	{
 			initialContext = getInitialContext();
-			Queue queue = (Queue)initialContext.lookup("/queue/testQueue");
+			Queue queue = (Queue)initialContext.lookup("/queue/ExampleQueue");
 
 			ConnectionFactory cf = (ConnectionFactory)initialContext.lookup("/ConnectionFactory");
 			connection = cf.createConnection();

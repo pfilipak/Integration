@@ -7,9 +7,9 @@ import br.com.tcc.integration.processor.JAXBProcessor;
 public class FileToDirectRoute extends RouteBuilder {
 	
 	public void configure() { 
-		from("file:///Users/filipak/Documents/workspace/Integration/file/in?noop=true")
-		.log("peguei o arquivo")
-		.process(new JAXBProcessor())
+		from("file:///home/desenv/workspace/Integration/file/in?noop=true")
+		.to("log:br.com?level=INFO")
+		.process(new JAXBProcessor()).convertBodyTo(String.class)
 		.to("direct:toQueue");
 	}
 }

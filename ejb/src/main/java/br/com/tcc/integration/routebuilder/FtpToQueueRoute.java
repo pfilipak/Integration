@@ -2,6 +2,7 @@ package br.com.tcc.integration.routebuilder;
 
 import org.apache.camel.builder.RouteBuilder;
 
+
 public class FtpToQueueRoute extends RouteBuilder {
 
 	@Override

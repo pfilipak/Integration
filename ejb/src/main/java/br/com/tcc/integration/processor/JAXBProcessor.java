@@ -9,11 +9,15 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.apache.camel.component.file.GenericFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import br.com.tcc.integration.domain.Card;
 
 public class JAXBProcessor implements Processor{
 
+	Logger logger = LoggerFactory.getLogger(JAXBProcessor.class);
+	
 	@Override
 	public void process(Exchange exchange) throws Exception {
 		Message stream = exchange.getIn(Message.class);

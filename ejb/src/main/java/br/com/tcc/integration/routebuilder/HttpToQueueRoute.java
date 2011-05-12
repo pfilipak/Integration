@@ -3,6 +3,7 @@ package br.com.tcc.integration.routebuilder;
 import org.apache.camel.builder.RouteBuilder;
 
 
+
 public class HttpToQueueRoute extends RouteBuilder {
 
 	@Override

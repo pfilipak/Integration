@@ -7,12 +7,16 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 
 import org.apache.camel.CamelContext;
+import org.apache.camel.Exchange;
+import org.apache.camel.Message;
+import org.apache.camel.Processor;
+import org.apache.camel.ProducerTemplate;
 import org.apache.camel.component.jms.JmsComponent;
 import org.apache.camel.impl.DefaultCamelContext;
+import org.apache.camel.spi.PackageScanClassResolver;
+import org.apachextras.camel.jboss.JBossPackageScanClassResolver;
 
-import br.com.tcc.integration.routebuilder.consumer.ConsumerQueueRoute;
-import br.com.tcc.integration.routebuilder.in.FileToDirectRoute;
-import br.com.tcc.integration.routebuilder.producer.ProduceQueueRoute;
+import br.com.tcc.integration.domain.Card;
 
 public class Main {
 
@@ -41,12 +45,26 @@ public class Main {
 		ConnectionFactory cf = (ConnectionFactory)initialContext.lookup("/ConnectionFactory");
 		jmsComponent.setConnectionFactory(cf);
 		context.addComponent("jms", jmsComponent);
-		context.addRoutes(new FileToDirectRoute()); 
-		context.addRoutes(new ProduceQueueRoute()); 
-		context.addRoutes(new ConsumerQueueRoute()); 
+//		context.addRoutes(new FileToDirectRoute()); 
+//		context.addRoutes(new ProduceQueueRoute()); 
+//		context.addRoutes(new ConsumerQueueRoute()); 
 		
-		System.out.println("start");
+		
 		context.start();
+		ProducerTemplate producer = context.createProducerTemplate();
+		final Card card = new Card(1, "2a");
+		System.out.println(card);
+		producer.send("jms:queue:testQueue?jmsMessageType=Text", new Processor() {
+			
+			@Override
+			public void process(Exchange exchange) throws Exception {
+				Message out = exchange.getIn();
+				
+				out.setBody("card");
+				System.out.println("*****************************************");
+				System.out.println(card);
+			}
+		});
 		Thread.sleep(100000); 
 		System.out.println("stop");
 		context.stop();
