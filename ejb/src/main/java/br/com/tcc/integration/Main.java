@@ -13,8 +13,6 @@ import org.apache.camel.Processor;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.component.jms.JmsComponent;
 import org.apache.camel.impl.DefaultCamelContext;
-import org.apache.camel.spi.PackageScanClassResolver;
-import org.apachextras.camel.jboss.JBossPackageScanClassResolver;
 
 import br.com.tcc.integration.domain.Card;
 
